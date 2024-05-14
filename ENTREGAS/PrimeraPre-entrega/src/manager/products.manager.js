@@ -29,10 +29,11 @@ export default class ProductManager {
                 price,
                 thumbnail,
                 code,
-                stock
+                stock,
+                category
             };
             const productExist = products.find((p) => p.title === newProduct.title);
-            if (productExist) return "User already exists";
+            if (productExist) return "producto already exists";
             products.push(newProduct);
             await fs.promises.writeFile(this.path, JSON.stringify(products));
             console.log('Producto agregado correctamente.');
@@ -93,5 +94,14 @@ export default class ProductManager {
             return productExist
             } 
         } else return null
+    }
+
+    async deleteFile() {
+        try {
+          await fs.promises.unlink(this.path);
+          console.log("archivo eliminado");
+        } catch (error) {
+          console.log(error);
+        }
     }
 }
